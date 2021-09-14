@@ -158,6 +158,15 @@ class BasicModel(nn.Module):
             return self.forward(X)[0].cpu().numpy()
         
 
+    def get_numpy_feature(self,X):
+        """
+        X: numpy array
+        return feature, type: numpy array
+        """
+        self.eval()
+        X = torch.tensor(X,dtype=torch.float32)
+        with torch.no_grad():
+            return self.forward(X)[1].cpu().numpy()
 
 
 
