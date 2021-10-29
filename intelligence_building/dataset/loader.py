@@ -27,11 +27,27 @@ class DatasetLoader:
 
 
     def __init__(self,csv_name='RP_1043.csv'):
+        """
+        Available option:
+            RP_1043.csv
+            JLS_350.csv
+        """
         self.data = pd.read_csv(__file__.replace('loader.py',csv_name))
         if csv_name == 'RP_1043.csv':
             self.__RP_1043_Handler()
+        elif csv_name == 'JLS_350.csv':
+            self.__JLS_350_Handler()
         
-        
+    def __JLS_350_Handler(self):
+        self.feature_name = ['T_suc','TR_dis','PRE','PRC','F','U','I','TCI_w',
+                            'TCO_w','PCI_w','PCO_w','PCI_r','PCO_r','TCO_r','TEI_w','TEO_w'
+                            'PEI_w','PEO_w','EXV_open']
+        self.oper_condition_name = ['TEO_w','TCI_w','TEI_w']
+        self.X  = self.data.loc[:,self.feature_name].copy().values
+        self.oper_condition = self.data.loc[:,self.oper_condition_name].copy().values
+        self.y = self.data['label'].copy().values
+
+
     def __RP_1043_Handler(self):
         # get the feature array
         self.feature_name = ['TEI','TCI','TCO','TCA','TEA','TRC_sub','TO_sump','TR_dis']
